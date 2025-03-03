@@ -52,5 +52,19 @@ namespace labo.signalr.api.Controllers
             }
             return NotFound();
         }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> TaskList(string id)
+        {
+            UselessTask? task = await _context.FindAsync<UselessTask>(id);
+            if (task != null)
+            {
+                task.Completed = true;
+                await _context.SaveChangesAsync();
+                return NoContent();
+
+            }
+            return NotFound();
+        }
     }
 }
